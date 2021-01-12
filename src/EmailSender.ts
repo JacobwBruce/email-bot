@@ -47,37 +47,6 @@ export const sendPortfolioEmail = (
     });
 };
 
-// export const sendEmail = async (emailAddress: string, heading: string, emailMessage: string) => {
-//     const transport = getTransport();
-//     const __dirname = path.resolve();
-//     const email = new Email({
-//         message: {
-//             from: process.env.EMAIL,
-//         },
-//         send: true,
-//         transport,
-//     });
-
-//     try {
-//         await email
-//             .send({
-//                 template: 'message',
-//                 message: {
-//                     to: emailAddress,
-//                 },
-//                 locals: {
-//                     heading,
-//                     message: emailMessage,
-//                 },
-//             })
-//             .catch(console.error);
-
-//         return { success: true };
-//     } catch (error) {
-//         return { success: false, error: 'Error sending email' };
-//     }
-// };
-
 export const sendEmail = async (emailAddress: string, heading: string, emailMessage: string) => {
     const transporter = getTransport();
 
