@@ -1,5 +1,5 @@
 import express from 'express';
-import { sendEmail } from './EmailSender';
+import { sendEmail, sendPortfolioEmail } from './EmailSender';
 
 const app: express.Application = express();
 
@@ -11,10 +11,21 @@ app.use(function (req, res, next) {
     next();
 });
 
-app.post('/sendEmail', async (req: express.Request, res: express.Response) => {
+app.post('/sendPortfolioEmail', async (req: express.Request, res: express.Response) => {
     const { name, email, message } = req.body;
-    const response: any = await sendEmail(email, name, message);
+    const response: any = await sendPortfolioEmail(email, name, message);
     res.json(response);
+});
+
+app.post('/sendEmail', async (req: express.Request, res: express.Response) => {
+    const { email, heading, message } = req.body;
+
+    if (!email || !heading || !message) {
+        res.status(400).json({ message: 'Must provide an email, heading, and message in request' });
+    } else {
+        const response = await sendEmail(email, heading, message);
+        res.json(response);
+    }
 });
 
 const PORT = process.env.PORT || 5000;
